@@ -11,6 +11,7 @@ import termios
 import struct
 import traceback
 import subprocess as sp
+from datetime import timedelta
 
 from os.path import dirname, join
 
@@ -176,6 +177,42 @@ class Doge(object):
 
         # Grab some processes
         ret += self.get_processes()[:2]
+
+        # RAID detection
+        
+        devs = os.listdir('/dev')
+        for dev in devs:
+            if dev[:2] == 'md':
+                ret.append('raids')
+                break
+
+        # web server detection
+        webservers = ['nginx','httpd','lighttpd']
+        processes = self.get_processes()
+        for process in processes:
+            for webserver in webservers:
+                if process[:len(webserver)] == webserver:
+                    ret.append('web server')
+        
+        # database detection
+        databases = ['mysqld','postgresql','mongodb']
+        for process in processes:
+            for database in databases:
+                if process[:len(database)] == database:
+                    ret.append('database')
+        
+        # uptime definition
+        with open('/proc/uptime', 'r') as f:
+            uptime_float = float(f.readline().split()[0])
+            uptime_seconds = timedelta(seconds = uptime_float)
+            uptime_days = int(uptime_seconds.total_seconds() / 60 / 60 / 24)
+            # xkcd references, wow!
+            if uptime_days > 100:
+                ret.append('devotion to duty')
+            elif uptime_days > 29:
+                ret.append('sysadmin')
+            elif uptime_days > 9:
+                ret.append('uptime')
 
         # Lowercase the data, and set it into the wordlist.
         self.words.extend(map(str.lower, ret))
