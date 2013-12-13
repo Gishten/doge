@@ -206,7 +206,7 @@ class Doge(object):
             uptime_float = float(f.readline().split()[0])
             uptime_seconds = timedelta(seconds = uptime_float)
             uptime_days = int(uptime_seconds.total_seconds() / 60 / 60 / 24)
-            # xkcd references, wow!
+            # xkcd references, wow
             if uptime_days > 100:
                 ret.append('devotion to duty')
             elif uptime_days > 29:

@@ -73,7 +73,7 @@ PREFIXES = DogeDeque(
 # Please keep in mind that this particular shibe is a terminal hax0r shibe,
 # and the words added should be in that domain
 WORDS = DogeDeque(
-    'computer', 'hax0r', 'code', 'data', 'internet', 
+    'computer', 'hax0r', 'code', 'data', 'internet', 'computing'
     'hacker', 'terminal', 'doge', 'shibe', 'program', 'free software',
     'web scale', 'monads', 'git', 'daemon', 'loop', 'pretty', 
     'thread safe', 'posix',
